@@ -7,7 +7,7 @@
 <title>Add new student</title>
 </head>
 <body>
-	<form action="">
+	<form action="/add-student">
 		<br> <label for="GET-name">Add new student:</label><br>
 		<br> <input id="GET-name" type="text" name="name"> <input
 			type="submit" value="Add">

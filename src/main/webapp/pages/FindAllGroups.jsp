@@ -7,7 +7,7 @@
 <title>Find all groups with less or equals student count</title>
 </head>
 <body>
-	<form action="">
+	<form action="/find-all-groups">
 		<br> <label for="GET-name">Find all groups with less or
 			equals student count:</label><br>
 		<br> <input id="GET-name" type="text" name="count"> <input

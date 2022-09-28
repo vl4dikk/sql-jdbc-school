@@ -14,21 +14,25 @@ import com.foxminded.school.models.Group;
 
 public class DataGenerator {
 
-	public void generateTestData(Data data, DataSource dataSource) throws DAOException {
+	public static void generateTestData(Data data, DataSource dataSource) throws DAOException {
 		try {
 			List<Group> groups = data.getGroups();
 			GroupDao groupDao = new GroupDao(dataSource);
-			groupDao.insert(groups);
-
+			if (groupDao.getAll().size() < 2) {
+				groupDao.insert(groups);
+			}
 			List<Course> courses = data.getCourses();
 			CourseDao courseDao = new CourseDao(dataSource);
-			courseDao.insert(courses);
-
+			if (courseDao.getAll().size() < 1) {
+				courseDao.insert(courses);
+			}
 			List<Student> students = data.getStudents(groups);
 			Map<Student, List<Course>> studentCourses = data.getStudentsCourses(students, courses);
 			StudentDao studentDao = new StudentDao(dataSource);
-			studentDao.insert(students);
-			studentDao.assignToCourses(studentCourses);
+			if (studentDao.getAll().size() < 2) {
+				studentDao.insert(students);
+				studentDao.assignToCourses(studentCourses);
+			}		
 		} catch (DAOException ex) {
 			throw new DAOException("Cannot add data to database", ex);
 		}

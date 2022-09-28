@@ -45,7 +45,7 @@ public class PropertyManager {
 	            FileInputStream fileStream = new FileInputStream(PathManager.getFilePath(propertiesFile));
 	            Properties properties = new Properties();
 	            properties.load(fileStream);
-	            String url = (String) properties.get("db.conn.url");
+	            String url = (String) properties.get("db.url");
 	            String username = (String) properties.get("db.username");
 	            String password = (String) properties.get("db.password");
 	            return new DataSource(url, username, password);

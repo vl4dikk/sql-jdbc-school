@@ -7,7 +7,7 @@
 <title>Find all students related to course with given name</title>
 </head>
 <body>
-	<form action="">
+	<form action="/find-all-students">
 		<br> <label for="GET-name">Find all students related to
 			course with given name:</label><br>
 		<br> <input id="GET-name" type="text" name="name"> <input

@@ -7,7 +7,7 @@
 <title>Delete student by STUDENT_ID</title>
 </head>
 <body>
-<form action="">
+<form action="/delete-student">
 		<br> <label for="GET-name">Delete student by STUDENT_ID:</label><br>
 		<br> <input id="GET-name" type="text" name="STUDENT_ID"> <input
 			type="submit" value="Delete">
