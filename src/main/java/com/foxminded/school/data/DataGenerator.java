@@ -37,4 +37,6 @@ public class DataGenerator {
 			throw new DAOException("Cannot add data to database", ex);
 		}
 	}
+	
+	
 }

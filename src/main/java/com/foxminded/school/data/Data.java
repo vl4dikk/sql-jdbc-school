@@ -1,12 +1,15 @@
 package com.foxminded.school.data;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Random;
 import java.util.stream.Collectors;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 
 import com.foxminded.school.models.Course;
 import com.foxminded.school.models.Group;
@@ -18,8 +21,8 @@ public class Data {
     private static final int STREAM_SIZE = 2;
     private static final int STUDENTS_AMOUNT = 200;
     private final Random random = new Random();
-    private final String[] firstNames;
-    private final String[] lastNames;
+    private final List<String> firstNames;
+    private final List<String> lastNames;
     private final int[] studentsInGroup;
     private final List<Course> courses;
 
@@ -104,11 +107,11 @@ public class Data {
     }
 
     private String getRandomFirstName() {
-        return firstNames[random.nextInt(firstNames.length - 1)];
+        return firstNames.get(random.nextInt(firstNames.size() - 1));
     }
 
     private String getRandomLastName() {
-        return lastNames[random.nextInt(lastNames.length - 1)];
+        return lastNames.get(random.nextInt(lastNames.size() - 1));
     }
 
     private int getRandomStudentsCount() {
@@ -128,92 +131,39 @@ public class Data {
     private int getRandomCourseIndex(List<Course> courses) {
         return random.nextInt(courses.size());
     }
+    
+    private List <String> getDataFromFile (String fileName) {
+    List<String> lines = new ArrayList<>();
+	try {
+	    lines = Files.readAllLines(new File(Objects.requireNonNull(ClassLoader
+	    	.getSystemClassLoader()
+	    	.getResource(fileName)
+	    	.getFile()))
+	    	.toPath()
+	    	.toAbsolutePath());
+	} catch (IOException e) {
+	    e.printStackTrace();
+	}
+	return lines;
+    }
+    
+    private List<Course> createCourses(String fileName) {
+    	String spliterator = "_";
+    	List <String> strings = getDataFromFile(fileName);
+
+    	List <Course> courses= strings.stream().map(line -> line.split(spliterator))
+    	                .map(course -> new Course(Integer.parseInt(course[1]), course[2], course[3]))
+    	                .collect(Collectors.toList());
+
+    	return courses;
+        }
 
     public Data() {
-        this.firstNames = new String[]{
-                "Vladyslav",
-                "Orest",
-                "Vitaliy",
-                "Oleksandr",
-                "Ivan",
-                "Yaroslav",
-                "Anton",
-                "Victor",
-                "Serhiy",
-                "Andrii",
-                "Svyatoslav",
-                "Grigoriy",
-                "David",
-                "Mykola",
-                "Bogdan",
-                "Dmytro",
-                "Mykhailo",
-                "Oleksii",
-                "Leonid",
-                "Petro"};
+        this.firstNames = getDataFromFile("FirsNames.txt");
 
-        this.lastNames = new String[]{
-                "Valchuk",
-                "Pavlychko",
-                "Kukuruza",
-                "Ravchuk",
-                "Bunyo",
-                "Shukhevych",
-                "Bandera",
-                "Kuk",
-                "Stetsko",
-                "Oliinyk",
-                "Kotyk",
-                "Svystun",
-                "Basiuk",
-                "Kachan",
-                "Lutskyi",
-                "Sydor",
-                "Hasyn",
-                "Oberyshyn",
-                "Kliachkivskiy",
-                "Dipsize"};
-
-        this.courses = Arrays.asList(
-                new Course(1,
-                        "Math",
-                        "Mathematics is the science and study of quality, structure, space, and change."),
-                new Course(2,
-                        "Biology",
-                        "Study of living things and their vital processes."),
-                new Course(3,
-                        "Chemistry",
-                        "Chemistry is one of three central branches educational science."),
-                new Course(4,
-                        "Computer Science",
-                        "How we use computers and computer programmhas utterly " +
-                                "defined the world we live in today and its computcientists whom " +
-                                "connect the abstract with concrete creating troducts we use every day."),
-                new Course(5,
-                        "Physics",
-                        "Survey of major concepts, methods, and applications of physics. "),
-                new Course(6,
-                        "Economics",
-                        "Social science of which factors determine the production " +
-                                "adistribution goods and services in a consumer, capitalist society."),
-                new Course(7,
-                        "History",
-                        "Historians use evidence to try to understand why people " +
-                                "believwhat they believed and why they did what they did."),
-                new Course(8,
-                        "Art",
-                        "Students will explore basic art media and techniques, such as drawing, painting, " +
-                                "graphic design, photography, collage, ceramics, printmaking, and sculpture and more!"),
-                new Course(9,
-                        "Robotics",
-                        "Robotics is a branch of mechanical engineering, " +
-                                "electricengineering, electronic engineering and computer science."),
-                new Course(10,
-                        "Sociology",
-                        "Sociology is the scientific study of behaviour by people in" +
-                                " the society in which they live, how it came about, is organised and " +
-                                "developed, and what it may become in the future.")
-        );
+        this.lastNames = getDataFromFile("LastNames.txt");
+        
+        this.courses = createCourses("courses.txt");
 
         this.studentsInGroup = new int[]{
                 0, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19,
