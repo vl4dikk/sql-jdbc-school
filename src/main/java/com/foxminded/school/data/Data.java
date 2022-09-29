@@ -4,12 +4,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Random;
 import java.util.stream.Collectors;
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 
 import com.foxminded.school.models.Course;
 import com.foxminded.school.models.Group;
@@ -25,6 +23,7 @@ public class Data {
     private final List<String> lastNames;
     private final int[] studentsInGroup;
     private final List<Course> courses;
+    private ClassLoader classLoader = getClass().getClassLoader();
 
     public List<Group> getGroups() {
         List<Group> list = new ArrayList<>();
@@ -133,18 +132,7 @@ public class Data {
     }
     
     private List <String> getDataFromFile (String fileName) {
-    List<String> lines = new ArrayList<>();
-	try {
-	    lines = Files.readAllLines(new File(Objects.requireNonNull(ClassLoader
-	    	.getSystemClassLoader()
-	    	.getResource(fileName)
-	    	.getFile()))
-	    	.toPath()
-	    	.toAbsolutePath());
-	} catch (IOException e) {
-	    e.printStackTrace();
-	}
-	return lines;
+	return new BufferedReader(new InputStreamReader(classLoader.getResourceAsStream(fileName))).lines().collect(Collectors.toList());
     }
     
     private List<Course> createCourses(String fileName) {
@@ -152,14 +140,14 @@ public class Data {
     	List <String> strings = getDataFromFile(fileName);
 
     	List <Course> courses= strings.stream().map(line -> line.split(spliterator))
-    	                .map(course -> new Course(Integer.parseInt(course[1]), course[2], course[3]))
+    	                .map(course -> new Course(Integer.parseInt(course[0]), course[1], course[2]))
     	                .collect(Collectors.toList());
 
     	return courses;
         }
 
     public Data() {
-        this.firstNames = getDataFromFile("FirsNames.txt");
+        this.firstNames = getDataFromFile("FirstNames.txt");
 
         this.lastNames = getDataFromFile("LastNames.txt");
         
