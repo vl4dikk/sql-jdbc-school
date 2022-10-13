@@ -7,14 +7,12 @@
 <title>Add new student</title>
 </head>
 <body>
-	<form action="/add-student">
+	<form action="${pageContext.request.contextPath}/add-student" method = post>
 		<br> <label for="GET-name">Add new student:</label><br>
-		<br> <input id="GET-name" type="text" name="name"> <input
+		<br> <input id="GET-name" type="text" name="firstName" placeholder="FirstName"> <br>
+		<input id="GET-name" type="text" name="lastName" placeholder="LastName"><br>
+		<input
 			type="submit" value="Add">
-	</form>
-	<br>
-	<form action="/sql-jdbc-school/index.jsp">
-		<input type="submit" value="Back to main page" />
 	</form>
 </body>
 </html>

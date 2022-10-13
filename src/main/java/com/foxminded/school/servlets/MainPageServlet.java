@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.foxminded.school.dao.DataSource;
-import com.foxminded.school.data.Data;
 import com.foxminded.school.data.DataGenerator;
 import com.foxminded.school.exception.DAOException;
 import com.foxminded.school.managers.PathManager;
@@ -25,22 +24,22 @@ public class MainPageServlet extends HttpServlet {
 
 	public void init(ServletConfig config) throws ServletException {
 		mymsg = "Choose option:";
-        try {
-            String createTablesScript = PathManager.getFilePath(CREATE_TABLES_SCRIPT);
-            try {
-                DataSource dataSource = PropertyManager.getConnectionProperties(DB_PROPERTIES);
-                PropertyManager.createTablesInDatabase(dataSource, createTablesScript);
+		try {
+			String createTablesScript = PathManager.getFilePath(CREATE_TABLES_SCRIPT);
+			try {
+				DataSource dataSource = PropertyManager.getConnectionProperties(DB_PROPERTIES);
+				PropertyManager.createTablesInDatabase(dataSource, createTablesScript);
 
-                Data data = new Data();
-                DataGenerator.generateTestData(data, dataSource);
-            } catch (DAOException ex) {
-                System.out.println("Connection failed...\n" + ex);
-            } catch (ClassNotFoundException ex) {
-                System.out.println("Cannot load Database Driver\n" + ex);
-            }
-        } catch (IOException ex) {
-            System.out.println("File not found!\n" + ex);
-        }
+				DataGenerator generator = new DataGenerator();
+				generator.generateTestData(dataSource);
+			} catch (DAOException ex) {
+				System.out.println("Connection failed...\n" + ex);
+			} catch (ClassNotFoundException ex) {
+				System.out.println("Cannot load Database Driver\n" + ex);
+			}
+		} catch (IOException ex) {
+			System.out.println("File not found!\n" + ex);
+		}
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -49,12 +48,13 @@ public class MainPageServlet extends HttpServlet {
 
 		PrintWriter out = response.getWriter();
 		out.println("<h3>" + mymsg + "</h3>");
-		out.println("<button type=\"submit\" id=\"1\">Find all groups with less or equals student count</button><br>");
-		out.println("<button type=\"submit\" id=\"2\">Find all students related to course with given name</button><br>");
-		out.println("<button type=\"submit\" id=\"3\">Add new student</button><br>");
-		out.println("<button type=\"submit\" id=\"4\">Delete student by STUDENT_ID</button><br>");
-		out.println("<button type=\"submit\" id=\"5\">Add a student to the course (from a list)</button><br>");
-		out.println("<button type=\"submit\" id=\"6\">Remove the student from one of his or her courses</button><br>");
+		out.println("<a href=\"pages/FindAllGroups.jsp\">Find all groups with less or equals student count</a></div><br>");
+		out.println(
+				"<a href=\"pages/FindAllStudents.jsp\">Find all students related to course with given name</a></div><br>");
+		out.println("<a href=\"pages/AddNewStudent.jsp\">Add new student</a></div><br>");
+		out.println("<a href=\"pages/DeleteStudent.jsp\">Delete student by STUDENT_ID</a></div><br>");
+		out.println("<a href=\"pages/AddStudentToCourse.jsp\">Add a student to the course (from a list)</a></div><br>");
+		out.println("<a href=\"pages/RemoveStudentFromCourse.jsp\">Remove the student from one of his or her courses</a></div><br>");
 	}
 
 	public void destroy() {
