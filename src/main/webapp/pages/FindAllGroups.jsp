@@ -7,7 +7,7 @@
 <title>Find all groups with less or equals student count</title>
 </head>
 <body>
-	<form action="${pageContext.request.contextPath}/find-all-groups" method = post>
+	<form method = post>
 		<br> <label>Find all groups with less or
 			equals student count:</label><br>
 		<br> <input type="text" name="count"> <input

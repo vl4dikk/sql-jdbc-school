@@ -2,7 +2,6 @@ package com.foxminded.school.dao;
 
 import com.foxminded.school.exception.DAOException;
 import com.foxminded.school.models.Course;
-import com.foxminded.school.dao.DataSource;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

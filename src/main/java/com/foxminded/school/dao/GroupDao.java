@@ -9,7 +9,6 @@ import java.util.List;
 
 import com.foxminded.school.exception.DAOException;
 import com.foxminded.school.models.Group;
-import com.foxminded.school.dao.DataSource;
 
 public class GroupDao {
     private static final String GET_ALL_GROUPS_QUERY = "SELECT * FROM groups";

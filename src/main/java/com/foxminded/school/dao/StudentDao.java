@@ -11,7 +11,6 @@ import java.util.Map;
 import com.foxminded.school.exception.DAOException;
 import com.foxminded.school.models.Course;
 import com.foxminded.school.models.Student;
-import com.foxminded.school.dao.DataSource;
 
 public class StudentDao {
 	    private static final String GET_ALL_STUDENTS_QUERY = "SELECT * FROM students";

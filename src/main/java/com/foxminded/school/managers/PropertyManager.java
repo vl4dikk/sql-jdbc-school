@@ -14,8 +14,10 @@ import com.foxminded.school.dao.DataSource;
 import com.foxminded.school.exception.DAOException;
 
 public class PropertyManager {
+	
+	private PathManager pathManager = new PathManager();
 
-	    public static DataSource getConnectionProperties(String propertiesFile) throws IOException, ClassNotFoundException {
+	    public DataSource getConnectionProperties(String propertiesFile) throws IOException, ClassNotFoundException {
 	        DataSource dataSource = parsePropertyFile(propertiesFile);
 	        try {
 	            Class.forName("org.postgresql.Driver");
@@ -25,7 +27,7 @@ public class PropertyManager {
 	        return dataSource;
 	    }
 
-	    public static void createTablesInDatabase(DataSource dataSource, String createTablesScript) throws IOException, DAOException {
+	    public void createTablesInDatabase(DataSource dataSource, String createTablesScript) throws IOException, DAOException {
 	        try {
 	            Connection connection = dataSource.getConnection();
 	            System.out.println("Connection established......");
@@ -40,9 +42,9 @@ public class PropertyManager {
 	        }
 	    }
 
-	    private static DataSource parsePropertyFile(String propertiesFile) throws IOException {
+	    private DataSource parsePropertyFile(String propertiesFile) throws IOException {
 	        try {
-	            FileInputStream fileStream = new FileInputStream(PathManager.getFilePath(propertiesFile));
+	            FileInputStream fileStream = new FileInputStream(pathManager.getFilePath(propertiesFile));
 	            Properties properties = new Properties();
 	            properties.load(fileStream);
 	            String url = (String) properties.get("db.url");

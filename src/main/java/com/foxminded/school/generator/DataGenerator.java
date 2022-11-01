@@ -1,31 +1,61 @@
-package com.foxminded.school.data;
+package com.foxminded.school.generator;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.stream.Collectors;
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
 
+import com.foxminded.school.dao.CourseDao;
+import com.foxminded.school.dao.DataSource;
+import com.foxminded.school.dao.GroupDao;
+import com.foxminded.school.dao.StudentDao;
+import com.foxminded.school.exception.DAOException;
 import com.foxminded.school.models.Course;
-import com.foxminded.school.models.Group;
 import com.foxminded.school.models.Student;
+import com.foxminded.school.models.Group;
 
-public class Data {
-    private static final int UPPER_LETTER_A_CHARCODE = 65;
-    private static final int UPPER_LETTER_Z_CHARCODE = 90;
-    private static final int STREAM_SIZE = 2;
-    private static final int STUDENTS_AMOUNT = 200;
-    private final Random random = new Random();
-    private final List<String> firstNames;
-    private final List<String> lastNames;
-    private final int[] studentsInGroup;
-    private final List<Course> courses;
-    private ClassLoader classLoader = getClass().getClassLoader();
+public class DataGenerator {
+	
+	 private static final int UPPER_LETTER_A_CHARCODE = 65;
+	    private static final int UPPER_LETTER_Z_CHARCODE = 90;
+	    private static final int STREAM_SIZE = 2;
+	    private static final int STUDENTS_AMOUNT = 200;
+	    private final Random random = new Random();
+	    private final List<String> firstNames;
+	    private final List<String> lastNames;
+	    private final int[] studentsInGroup;
+	    private final List<Course> courses;
+	    private ClassLoader classLoader = getClass().getClassLoader();
 
-    public List<Group> getGroups() {
+	public void generateTestData(DataSource dataSource) throws DAOException {
+		try {
+			List<Group> groups = getGroups();
+			GroupDao groupDao = new GroupDao(dataSource);
+			if (groupDao.getAll().isEmpty()) {
+				groupDao.insert(groups);
+			}
+			List<Course> courses = getCourses();
+			CourseDao courseDao = new CourseDao(dataSource);
+			if (courseDao.getAll().isEmpty()) {
+				courseDao.insert(courses);
+			}
+			List<Student> students = getStudents(groups);
+			Map<Student, List<Course>> studentCourses = getStudentsCourses(students, courses);
+			StudentDao studentDao = new StudentDao(dataSource);
+			if (studentDao.getAll().isEmpty()) {
+				studentDao.insert(students);
+				studentDao.assignToCourses(studentCourses);
+			}		
+		} catch (DAOException ex) {
+			throw new DAOException("Cannot add data to database", ex);
+		}
+	}
+	
+    private List<Group> getGroups() {
         List<Group> list = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
             Group group = new Group();
@@ -43,11 +73,11 @@ public class Data {
         return list;
     }
 
-    public List<Course> getCourses() {
+    private List<Course> getCourses() {
         return courses;
     }
 
-    public List<Student> getStudents(List<Group> groups) {
+    private List<Student> getStudents(List<Group> groups) {
         List<Student> students = getStudentsWithNames();
         return assignStudentsToGroups(students, groups);
     }
@@ -145,8 +175,8 @@ public class Data {
 
     	return courses;
         }
-
-    public Data() {
+    
+    public DataGenerator() {
         this.firstNames = getDataFromFile("FirstNames.txt");
 
         this.lastNames = getDataFromFile("LastNames.txt");
@@ -158,4 +188,6 @@ public class Data {
                 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30};
     }
 
+	
+	
 }

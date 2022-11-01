@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.net.URL;
 
 public class PathManager {
-	 public static String getFilePath(String file) throws IOException {
+	 public  String getFilePath(String file) throws IOException {
 	        ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
 	        URL url = classLoader.getResource(file);
 	        if (url == null) {

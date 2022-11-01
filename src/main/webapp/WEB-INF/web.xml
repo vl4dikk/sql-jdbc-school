@@ -20,4 +20,14 @@
 <url-pattern>/main</url-pattern>
 </servlet-mapping>
 
+  <servlet>
+<servlet-name>GroupServlet</servlet-name>
+<servlet-class>com.foxminded.school.servlets.GroupServlet</servlet-class>
+</servlet>
+
+<servlet-mapping>
+<servlet-name>GroupServlet</servlet-name>
+<url-pattern>/GroupServlet</url-pattern>
+</servlet-mapping>
+
 </web-app>
