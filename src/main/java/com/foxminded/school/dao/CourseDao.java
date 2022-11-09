@@ -1,15 +1,16 @@
 package com.foxminded.school.dao;
 
 import com.foxminded.school.exception.DAOException;
+import com.foxminded.school.managers.PropertyManager;
 import com.foxminded.school.models.Course;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-
 
 public class CourseDao {
 
@@ -20,11 +21,17 @@ public class CourseDao {
 			+ "  FROM students_courses " + "       INNER JOIN courses "
 			+ "       ON students_courses.course_id = courses.course_id " + " WHERE students_courses.student_id = ?";
 
-	private final DataSource dataSource;
+	private DataSource dataSource;
+	private static final String DB_PROPERTIES = "db.properties";
+	private PropertyManager propertyManager = new PropertyManager();
 
-	public CourseDao(DataSource dataSource) {
-	        this.dataSource = dataSource;
-	    }
+	public CourseDao() {
+		try {
+			this.dataSource = propertyManager.getConnectionProperties(DB_PROPERTIES);
+		} catch (ClassNotFoundException | IOException e) {
+			e.printStackTrace();
+		}
+	}
 
 	public void insert(List<Course> courses) throws DAOException {
 		if (courses == null)

@@ -5,13 +5,13 @@ import java.io.IOException;
 import java.net.URL;
 
 public class PathManager {
-	 public  String getFilePath(String file) throws IOException {
-	        ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
-	        URL url = classLoader.getResource(file);
-	        if (url == null) {
-	            throw new FileNotFoundException("File not found: '" + file + "'");
-	        }
-	        return url.getPath();
-	    }
+	public String getFilePath(String file) throws IOException {
+		ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+		URL url = classLoader.getResource(file);
+		if (url == null) {
+			throw new FileNotFoundException("File not found: '" + file + "'");
+		}
+		return url.getPath();
+	}
 
 }

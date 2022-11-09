@@ -71,27 +71,27 @@ public class StudentController {
 
 		return answer;
 	}
-	
-	public LinkedList<String> getAllStudents(){
+
+	public LinkedList<String> getAllStudents() {
 		List<Student> students = service.getAllStudents();
 		LinkedList<String> answer = new LinkedList<>();
 		answer.add("<html><body>");
 		answer.add("<table border=1 width=50% height=50%>");
 		answer.add("<tr><th>Student id</th><th>Student name</th><tr>");
-		for(Student student : students) {
+		for (Student student : students) {
 			String id = String.valueOf(student.getId());
 			String name = student.getFirstName() + " " + student.getLastName();
 			answer.add("<tr><td>" + id + "</td><td>" + name + "</td></tr>");
 		}
-		
+
 		answer.add("</table>");
 		answer.add("</html></body>");
-		
+
 		return answer;
 	}
-	
-	public LinkedList<String> deleteFromCourse(String studentId, String courseId){
-		
+
+	public LinkedList<String> deleteFromCourse(String studentId, String courseId) {
+
 		try {
 			service.deleteFromCourse(studentId, courseId);
 		} catch (DAOException e) {
@@ -100,6 +100,36 @@ public class StudentController {
 		LinkedList<String> answer = new LinkedList<String>();
 		answer.add("<html><body>");
 		answer.add("<h2>" + "Student has been deleted from course with id :" + courseId + "</h2>");
+		answer.add("</table>");
+		answer.add("</html></body>");
+		return answer;
+	}
+
+	public LinkedList<String> getAllCourses() {
+		List<Course> courses = service.getAllCourses();
+		LinkedList<String> answer = new LinkedList<>();
+		answer.add("<html><body>");
+		answer.add("<table border=1 width=50% height=50%>");
+		answer.add("<tr><th>Course id</th><th>Course name</th><th>Course description</th><tr>");
+		for (Course course : courses) {
+			String id = String.valueOf(course.getId());
+			String name = course.getName();
+			String description = course.getDescription();
+			answer.add("<tr><td>" + id + "</td><td>" + name + "</td><td>" + description + "</td></tr>");
+		}
+
+		answer.add("</table>");
+		answer.add("</html></body>");
+
+		return answer;
+	}
+
+	public LinkedList<String> assignToCourse(String studentId, String courseId) {
+
+		service.assignToCourse(studentId, courseId);
+		LinkedList<String> answer = new LinkedList<String>();
+		answer.add("<html><body>");
+		answer.add("<h2>" + "Student, with id :" + studentId + "was added to course with id :" + courseId + "</h2>");
 		answer.add("</table>");
 		answer.add("</html></body>");
 		return answer;

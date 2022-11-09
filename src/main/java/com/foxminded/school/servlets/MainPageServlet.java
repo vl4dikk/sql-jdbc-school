@@ -38,7 +38,7 @@ public class MainPageServlet extends HttpServlet {
 				propertyManager.createTablesInDatabase(dataSource, createTablesScript);
 
 				DataGenerator generator = new DataGenerator();
-				generator.generateTestData(dataSource);
+				generator.generateTestData();
 			} catch (DAOException ex) {
 				System.out.println("Connection failed...\n" + ex);
 			}
@@ -58,8 +58,10 @@ public class MainPageServlet extends HttpServlet {
 				"<a href=\"StudentServlet?type=FindAll\">Find all students related to course with given name</a></div><br>");
 		out.println("<a href=\"StudentServlet?type=AddStudent\">Add new student</a></div><br>");
 		out.println("<a href=\"StudentServlet?type=DeleteStudent\">Delete student by STUDENT_ID</a></div><br>");
-		out.println("<a href=\"StudentServlet?type=AssignToCourse\">Add a student to the course (from a list)</a></div><br>");
-		out.println("<a href=\"StudentServlet?type=DeleteFromCourse\">Remove the student from one of his or her courses</a></div><br>");
+		out.println(
+				"<a href=\"StudentServlet?type=AssignToCourse\">Add a student to the course (from a list)</a></div><br>");
+		out.println(
+				"<a href=\"StudentServlet?type=DeleteFromCourse\">Remove the student from one of his or her courses</a></div><br>");
 	}
 
 	public void destroy() {

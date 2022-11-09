@@ -1,35 +1,23 @@
 package com.foxminded.school.services;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
 import com.foxminded.school.dao.CourseDao;
-import com.foxminded.school.dao.DataSource;
 import com.foxminded.school.dao.StudentDao;
 import com.foxminded.school.exception.DAOException;
-import com.foxminded.school.managers.PropertyManager;
 import com.foxminded.school.models.Course;
 import com.foxminded.school.models.Student;
 
 public class StudentService {
-	 private static final String DB_PROPERTIES = "db.properties";
 	 private StudentDao studentDao;
-	 private DataSource dataSource;
-	 private PropertyManager propertyManager = new PropertyManager();
 	 private CourseDao courseDao;
 
 	    public StudentService() {
-	    	try {
-				dataSource = propertyManager.getConnectionProperties(DB_PROPERTIES);
-			} catch (ClassNotFoundException | IOException e) {
-				e.printStackTrace();
-			}
-
-		this.studentDao = new StudentDao(dataSource);
-		this.courseDao = new CourseDao(dataSource);
+		this.studentDao = new StudentDao();
+		this.courseDao = new CourseDao();
 	    }
 
 	    public void addNewStudent(String firstName, String lastName) {
@@ -70,7 +58,9 @@ public class StudentService {
 	        studentDao.deleteFromCourse(studentId, courseId);
 	    }
 
-	    public void assignToCourse(Integer studentId, Integer courseId) {
+	    public void assignToCourse(String sId, String cId) {
+	    int studentId = Integer.parseInt(sId);
+	    int courseId = Integer.parseInt(cId);
 		try {
 		    studentDao.assignToCourse(studentId, courseId);
 		} catch (DAOException e) {
@@ -95,6 +85,16 @@ public class StudentService {
 	    	List<Student> answer = new LinkedList<>();
 			try {
 				answer = studentDao.getAll();
+			} catch (DAOException e) {
+				e.printStackTrace();
+			}
+	    	return answer;
+	    }
+	    
+	    public List<Course> getAllCourses(){
+	    	List<Course> answer = new LinkedList<>();
+	    	try {
+				answer = courseDao.getAll();
 			} catch (DAOException e) {
 				e.printStackTrace();
 			}
