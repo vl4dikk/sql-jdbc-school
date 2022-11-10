@@ -1,0 +1,10 @@
+1_Math_Mathematics is the science and study of quality, structure, space, and change.
+2_Biology_Study of living things and their vital processes.
+3_Chemistry_Chemistry is one of three central branches educational science.
+4_Computer Science_How we use computers and computer programmhas utterly defined the world we live in today and its computer cientists whom connect the abstract with concrete creating troducts we use every day.
+5_Physics_Survey of major concepts, methods, and applications of physics.
+6_Economics_Social science of which factors determine the production adistribution goods and services in a consumer, capitalist society.
+7_History_Historians use evidence to try to understand why people believwhat they believed and why they did what they did.
+8_Art_Students will explore basic art media and techniques, such as drawing, painting, graphic design, photography, collage, ceramics, printmaking, and sculpture and more.
+9_Robotics_Robotics is a branch of mechanical engineering, electricengineering, electronic engineering and computer science.
+10_Sociology_Sociology is the scientific study of behaviour by people in the society in which they live, how it came about, is organised and developed, and what it may become in the future.

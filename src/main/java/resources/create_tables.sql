@@ -1,4 +1,7 @@
-DROP TABLE IF EXISTS students, groups, courses, students_courses;
+DROP TABLE IF EXISTS students_courses CASCADE;
+DROP TABLE IF EXISTS students CASCADE;
+DROP TABLE IF EXISTS groups CASCADE;
+DROP TABLE IF EXISTS courses CASCADE;
 
 CREATE TABLE IF NOT EXISTS groups(
     group_id   SERIAL PRIMARY KEY,

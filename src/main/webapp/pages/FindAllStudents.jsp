@@ -7,15 +7,11 @@
 <title>Find all students related to course with given name</title>
 </head>
 <body>
-	<form action="/find-all-students">
+	<form action="${pageContext.request.contextPath}/find-all-students" method = post>
 		<br> <label for="GET-name">Find all students related to
 			course with given name:</label><br>
 		<br> <input id="GET-name" type="text" name="name"> <input
 			type="submit" value="Search">
-	</form>
-	<br>
-	<form action="/sql-jdbc-school/index.jsp">
-		<input type="submit" value="Back to main page" />
 	</form>
 </body>
 </html>
