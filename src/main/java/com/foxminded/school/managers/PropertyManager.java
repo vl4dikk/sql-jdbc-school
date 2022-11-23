@@ -2,6 +2,7 @@ package com.foxminded.school.managers;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.sql.Connection;
@@ -20,7 +21,7 @@ public class PropertyManager {
 	public DataSource getConnectionProperties(String propertiesFile) throws IOException, ClassNotFoundException {
 		DataSource dataSource = parsePropertyFile(propertiesFile);
 		try {
-			Class.forName("org.postgresql.Driver");
+			Class.forName(getDriver(propertiesFile));
 		} catch (ClassNotFoundException ex) {
 			throw new ClassNotFoundException("Driver can't be loaded\n" + ex);
 		}
@@ -55,5 +56,16 @@ public class PropertyManager {
 		} catch (IOException ex) {
 			throw new IOException("File with properties can't be parsed\n" + ex);
 		}
+	}
+	
+	private String getDriver(String propertiesFile) throws FileNotFoundException, IOException {
+		FileInputStream fileStream = new FileInputStream(pathManager.getFilePath(propertiesFile));
+		Properties properties = new Properties();
+		try {
+			properties.load(fileStream);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return (String) properties.getProperty("db.driver");
 	}
 }
