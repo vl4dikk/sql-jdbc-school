@@ -1,8 +1,6 @@
 package com.foxminded.school.dao;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.anyString;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -10,38 +8,20 @@ import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.foxminded.school.exception.DAOException;
 import com.foxminded.school.managers.PropertyManager;
 import com.foxminded.school.models.Student;
 
-@ExtendWith(MockitoExtension.class)
 class StudentDaoTest {
 
 	private DataSource dataSource = new DataSource("jdbc:h2:mem:myDb;DB_CLOSE_DELAY=-1", "sa", "sa");
-
-	@Mock
-	private PropertyManager propertyManagerMock = new PropertyManager();
-
-	@InjectMocks
 	private StudentDao studentDao = new StudentDao();
 
 	@BeforeEach
 	private void setDataSource() {
 		PropertyManager propertyManager = new PropertyManager();
 		String createTables = "src/test/resources/create_tables.sql";
-		try {
-			Mockito.lenient().when(propertyManagerMock.getConnectionProperties(anyString())).thenReturn(dataSource);
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
 		try {
 			propertyManager.createTablesInDatabase(dataSource, createTables);
 		} catch (DAOException e) {
