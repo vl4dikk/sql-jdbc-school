@@ -10,13 +10,13 @@
 	<properties>
 		<maven.compiler.target>1.8</maven.compiler.target>
 		<maven.compiler.source>1.8</maven.compiler.source>
-		<junit.jupiter.version>5.5.2</junit.jupiter.version>
+		<junit.jupiter.version>5.7.2</junit.jupiter.version>
 	</properties>
 
 	<build>
 
 
-		<testSourceDirectory>src/main/test</testSourceDirectory>
+		<testSourceDirectory>src/test/java</testSourceDirectory>
 		<resources>
 			<resource>
 				<directory>src/main/java</directory>
@@ -48,27 +48,33 @@
 
 	<dependencies>
 		<dependency>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-junit-jupiter</artifactId>
+			<version>4.6.1</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+			<version>1.4.194</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
 			<groupId>org.postgresql</groupId>
 			<artifactId>postgresql</artifactId>
 			<version>42.2.5</version>
 		</dependency>
 		<dependency>
 			<groupId>org.junit.jupiter</groupId>
-			<artifactId>junit-jupiter-engine</artifactId>
-			<version>${junit.jupiter.version}</version>
+			<artifactId>junit-jupiter</artifactId>
+			<version>5.9.1</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.junit.jupiter</groupId>
-			<artifactId>junit-jupiter-api</artifactId>
+			<artifactId>junit-jupiter-engine</artifactId>
 			<version>${junit.jupiter.version}</version>
 			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.junit.platform</groupId>
-			<artifactId>junit-platform-commons</artifactId>
-			<version>1.5.2</version>
-			<scope>compile</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.mybatis</groupId>
