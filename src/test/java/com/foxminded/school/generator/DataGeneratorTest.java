@@ -29,44 +29,28 @@ class DataGeneratorTest {
 	@BeforeEach
 	private void setDataSource() {
 		PropertyManager propertyManager = new PropertyManager();
-		String createTables = "src/test/resources/create_tables.sql";
-		try {
-			propertyManager.createTablesInDatabase(dataSource, createTables);
-		} catch (DAOException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		String createTables = "create_tables.sql";
+				try {
+					propertyManager.createTablesInDatabase(dataSource, createTables);
+				} catch (DAOException e) {
+					e.printStackTrace();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
 	}
 
 	@Test
-	void testGenerateTestData() {
+	void testGenerateTestData() throws DAOException {
 		List<Course> courses = new LinkedList<>();
 		List<Group> groups = new LinkedList<>();
 		List<Student> students = new LinkedList<>();
 		int coursesCount = 10;
 		int groupsCount = 10;
 		int studentsCount = 200;
-		try {
 			generator.generateTestData();
-		} catch (DAOException e) {
-			e.printStackTrace();
-		}
-		try {
 			courses = courseDao.getAll();
-		} catch (DAOException e) {
-			e.printStackTrace();
-		}
-		try {
 			groups = groupDao.getAll();
-		} catch (DAOException e) {
-			e.printStackTrace();
-		}
-		try {
 			students = studentDao.getAll();
-		} catch (DAOException e) {
-			e.printStackTrace();
-		}
 		assertEquals(coursesCount, courses.size());
 		assertEquals(groupsCount, groups.size());
 		assertEquals(studentsCount, students.size());

@@ -3,8 +3,8 @@ package com.foxminded.school.managers;
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Properties;
@@ -34,11 +34,7 @@ public class PropertyManager {
 			Connection connection = dataSource.getConnection();
 			System.out.println("Connection established......");
 			ScriptRunner scriptRunner = new ScriptRunner(connection);
-			try {
-				scriptRunner.runScript(new BufferedReader(new FileReader(createTablesScript)));
-			} catch (IOException ex) {
-				throw new IOException("Cannot read file", ex);
-			}
+			scriptRunner.runScript(new BufferedReader(new InputStreamReader(getClass().getClassLoader().getResourceAsStream(createTablesScript))));
 		} catch (SQLException ex) {
 			throw new DAOException("Cannot connect to database...", ex);
 		}
